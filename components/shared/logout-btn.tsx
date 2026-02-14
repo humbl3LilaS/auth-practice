@@ -1,9 +1,5 @@
-import { Button } from "../ui/button"
+import { Button } from "../ui/button";
 
 export const LogoutBtn = () => {
-	return (
-		<Button variant={"destructive"}>
-			Logout
-		</Button>
-	)
-}
+  return <Button variant={"destructive"}>Logout</Button>;
+};

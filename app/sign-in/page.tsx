@@ -1,18 +1,18 @@
-import { SignInForm } from "@/components/shared/sign-in-form"
+import { SignInForm } from "@/components/shared/sign-in-form";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 
 export default async function SignIn({
   searchParams,
 }: {
-  searchParams: Promise<{ oauthError?: string }>
+  searchParams: Promise<{ oauthError?: string }>;
 }) {
-  const { oauthError } = await searchParams
+  const { oauthError } = await searchParams;
 
   return (
     <div className="container mx-auto p-4 max-w-[750px]">
@@ -30,5 +30,5 @@ export default async function SignIn({
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

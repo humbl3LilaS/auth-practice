@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 // import { getCurrentUser } from "@/auth/nextjs/currentUser"
-import { ToggleRoleButton } from "@/components/shared/toggle-role-button"
+import { ToggleRoleButton } from "@/components/shared/toggle-role-button";
 
 export default async function PrivatePage() {
   // const currentUser = await getCurrentUser({ redirectIfNotFound: true })
@@ -15,5 +15,5 @@ export default async function PrivatePage() {
         </Button>
       </div>
     </div>
-  )
+  );
 }

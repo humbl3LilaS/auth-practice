@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   Form,
@@ -7,24 +7,24 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Button } from "@/components/ui/button"
-import { useState } from "react"
-import Link from "next/link"
-import { signUpSchema } from "@/lib/schema"
-import { Input } from "../ui/input"
+} from "@/components/ui/form";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import Link from "next/link";
+import { signUpSchema } from "@/lib/schema";
+import { Input } from "../ui/input";
 
 export function SignUpForm() {
-  const [error, setError] = useState<string>()
+  const [error, setError] = useState<string>();
   const form = useForm<z.infer<typeof signUpSchema>>({
     defaultValues: {
       name: "",
       email: "",
       password: "",
     },
-  })
+  });
 
   async function onSubmit(data: z.infer<typeof signUpSchema>) {
     // const error = await signUp(data)
@@ -96,5 +96,5 @@ export function SignUpForm() {
         </div>
       </form>
     </Form>
-  )
+  );
 }
