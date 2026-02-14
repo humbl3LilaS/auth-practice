@@ -13,20 +13,27 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import Link from "next/link";
-import { signUpSchema } from "@/lib/schema";
+import { signUpSchema, TSignUpSchema } from "@/lib/schema";
 import { Input } from "../ui/input";
+import { signUp } from "@/actions/auth";
+import { useRouter } from "next/navigation";
 
 export function SignUpForm() {
   const [error, setError] = useState<string>();
-  const form = useForm<z.infer<typeof signUpSchema>>({
+  const form = useForm<TSignUpSchema>({
     defaultValues: {
       name: "",
       email: "",
       password: "",
     },
   });
+  const router = useRouter();
 
-  async function onSubmit(data: z.infer<typeof signUpSchema>) {
+  async function onSubmit(data: TSignUpSchema) {
+    const result = await signUp(data);
+    if (result.success) {
+      router.push("/");
+    }
     // const error = await signUp(data)
     // setError(error)
   }
