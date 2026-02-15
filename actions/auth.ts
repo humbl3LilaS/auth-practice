@@ -1,12 +1,45 @@
 "use server";
 import { db } from "@/db/dirzzle";
 import { UserTable } from "@/db/schema";
-import { TSignUpSchema } from "@/lib/schema";
-import { generateSalt, hashPassword } from "@/lib/utils";
-import { and, eq } from "drizzle-orm";
-import { success } from "zod/mini";
-import { createSession, getUserSession } from "./session";
-import { redirect } from "next/dist/server/api-utils";
+import { TSignInSchema, TSignUpSchema } from "@/lib/schema";
+import { generateSalt, hashPassword, verifyPassword } from "@/lib/utils";
+import { eq } from "drizzle-orm";
+import { createSession } from "./session";
+import { getUserSession } from "./get-user-session";
+
+export const signIn = async (payload: TSignInSchema) => {
+  const [user] = await db
+    .select()
+    .from(UserTable)
+    .where(eq(UserTable.email, payload.email));
+
+  if (!user) {
+    return {
+      success: false,
+      message: "Invalid Email",
+    };
+  }
+
+  const isPasswordCorrect = await verifyPassword(
+    user.password!,
+    payload.password,
+    user.salt!,
+  );
+
+  if (!isPasswordCorrect) {
+    return {
+      success: false,
+      message: "Invalid Password",
+    };
+  }
+
+  await createSession({ id: user.id, role: user.role });
+
+  return {
+    success: true,
+    message: "Login Success",
+  };
+};
 
 export const signUp = async (payload: TSignUpSchema) => {
   const [existingUser] = await db

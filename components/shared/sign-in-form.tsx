@@ -13,8 +13,10 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import Link from "next/link";
-import { signInSchema } from "@/lib/schema";
+import { signInSchema, TSignInSchema } from "@/lib/schema";
 import { Input } from "../ui/input";
+import { signIn } from "@/actions/auth";
+import { useRouter } from "next/navigation";
 
 export function SignInForm() {
   const [error, setError] = useState<string>();
@@ -25,9 +27,13 @@ export function SignInForm() {
     },
   });
 
-  async function onSubmit(data: z.infer<typeof signInSchema>) {
-    // const error = await signIn(data)
-    // setError(error)
+  const router = useRouter();
+
+  async function onSubmit(data: TSignInSchema) {
+    const res = await signIn(data);
+    if (res) {
+      router.push("/");
+    }
   }
 
   return (

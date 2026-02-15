@@ -1,4 +1,5 @@
 import { getCurrentUserInfo } from "@/actions/auth";
+import { LogoutBtn } from "@/components/shared/logout-btn";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -38,6 +39,7 @@ export default async function Home() {
                 <Link href="/admin">Admin Page</Link>
               </Button>
             )}
+            <LogoutBtn />
           </CardFooter>
         </Card>
       )}

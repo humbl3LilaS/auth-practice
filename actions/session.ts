@@ -2,7 +2,6 @@
 
 import { UserRole } from "@/db/schema";
 import { redis } from "@/lib/redis";
-import { sessionSchema } from "@/lib/schema";
 import crypto from "crypto";
 import { cookies } from "next/headers";
 
@@ -30,19 +29,13 @@ const setCookie = async (sessionId: string) => {
   });
 };
 
-export const getUserSession = async () => {
+export const removeUserSession = async () => {
   const cookie = await cookies();
+
   const sessionId = cookie.get(COOKIE_SESSION)?.value;
 
   if (!sessionId) return null;
 
-  const cachedData = await redis.get(`session:${sessionId}`);
-
-  if (!cachedData) return null;
-
-  const parsedData = JSON.parse(cachedData);
-
-  const { success, data } = sessionSchema.safeParse(parsedData);
-
-  return success ? data : null;
+  await redis.del(`session:${sessionId}`);
+  cookie.delete(COOKIE_SESSION);
 };

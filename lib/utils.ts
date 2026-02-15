@@ -18,3 +18,15 @@ export function hashPassword(password: string, salt: string) {
 export function generateSalt() {
   return crypto.randomBytes(16).toString("hex");
 }
+
+export async function verifyPassword(
+  hashedPassword: string,
+  password: string,
+  salt: string,
+) {
+  const inputedPasswordHash = (await hashPassword(password, salt)) as string;
+  return crypto.timingSafeEqual(
+    Buffer.from(hashedPassword, "hex"),
+    Buffer.from(inputedPasswordHash, "hex"),
+  );
+}
